@@ -1,2 +1,2 @@
 # MarketMe
-## A Productivity Portal for Freelancers
+## A Productivity Suite for Freelancers

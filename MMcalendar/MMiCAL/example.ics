@@ -1,0 +1,42 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:mgardner3000@gmail.com
+X-WR-TIMEZONE:America/Phoenix
+BEGIN:VTIMEZONE
+TZID:America/Phoenix
+X-LIC-LOCATION:America/Phoenix
+BEGIN:STANDARD
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0700
+TZNAME:MST
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART:20200827T203000Z
+DTEND:20200827T213000Z
+DTSTAMP:20200827T035207Z
+UID:430omm1d7521r9a9341nlt050c@google.com
+CREATED:20200827T035203Z
+ATTENDEE;MEMBER="mailto:projectA@example.com","mailto:projectB@example.com";
+ CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=DECLINED;CN=philoTFarnz@gm
+ ail.com;X-NUM-GUESTS=0:mailto:PhiloTFarnz@gmail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=charles
+ @gmail.com:mailto:charles@gmail.com
+DESCRIPTION;ALT-REP="Have to test ;'s somewhere":Doing some stuff with calendar files\, this is research.\n\n-::~
+ :~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+ ::~:~::-\nPlease do not edit this section of the description.\n\nThis event
+  has a video call.\nJoin: https://meet.google.com/qdj-jokt-bhd\n-::~:~::~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::
+ -"Your move\, 'Google'"
+LAST-MODIFIED:20200827T035203Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:"Quote Party"
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
