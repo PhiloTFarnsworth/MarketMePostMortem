@@ -43,3 +43,11 @@ in some areas I feel this was counter productive and added extra complexity when
 specifically focus on doing one thing well and growing from there.  That being said, MarketMe was a learning experience and in that
 vein I consider it a successful one.  
 
+### Development Screenshots
+#### Dashboard
+![Dashboard](Dashboard.png)
+
+#### Calendar
+![Calendar](Calendar.png)
+
+
