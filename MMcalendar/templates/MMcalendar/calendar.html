@@ -1,0 +1,35 @@
+{% extends "MMUX/layout.html" %}
+
+{% block script %}
+    {% if thisUser == user %}
+    
+    {% else %}
+    
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class='container'>
+        <div class="row">
+            <div class="col align-self-start">
+            {% if theDate.month != 1 %}
+            <a class="btn btn-light" href="{% url 'single calendar' thisUser.username thisCalendar theDate.year theDate.month|add:'-1'%}"> Previous Month</a>
+            {% else %}
+            <a class="btn btn-light" href="{% url 'single calendar' thisUser.username thisCalendar theDate.year|add:'-1' 12 %}"> Previous Month</a>
+            {% endif %}
+            </div>
+            <div class="col align-self-end">
+            {% if theDate.month != 12 %}
+            <a class="btn btn-light float-right" role="button" href="{% url 'single calendar' thisUser.username thisCalendar theDate.year theDate.month|add:'1'%}"> Next Month</a>
+            {% else %}
+            <a class="btn btn-light float-right" href="{% url 'single calendar' thisUser.username thisCalendar theDate.year|add:'1' 1 %}"> Next Month</a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class='container-fluid'>
+        <div class="row justify-content-md-center">
+                {{calendar|safe}}
+        </div>
+    </div>
+{% endblock %}

@@ -27,16 +27,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Application definition
 
 INSTALLED_APPS = [
+    'MMUX',
+    'MMcalendar',
+    'MMsocial',
+    "crispy_forms",
+    "crispy_bootstrap5",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'markdownify.apps.MarkdownifyConfig',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +53,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'MMcalendar.middleware.timezone.TimezoneMiddleware'
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+MARKDOWNIFY = {
+    "default": {
+        "BLEACH": False
+    }
+}
 
 ROOT_URLCONF = 'MarketMe.urls'
 
@@ -80,7 +97,7 @@ DATABASES = {
     }
 }
 
-
+AUTH_USER_MODEL = "MMUX.User"
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -118,3 +135,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

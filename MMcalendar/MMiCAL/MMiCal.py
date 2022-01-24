@@ -1,6 +1,6 @@
 import os
 from math import floor, ceil
-from classes import Event, Calendar, Property, Timezone
+from .classes import Event, Calendar, Property, Timezone
 
 def foldtoICS(calendarList):
     """foldtoICS takes a list of calendar objects and returns an ICalendar friendly string."""
@@ -209,10 +209,7 @@ def checkEscapedColon(phrase, tentativeProperty, recursed=0):
         correctString += tentativeProperty
     return correctString
 
-## Personally, I'd rather just omit Alt-Reps, as they seem like a prime vector for malicious
-## code if implemented, as well as being a privacy concern.  Kinda funny that they'd change 
-## their recommendation for UUID in 7745 to make events more anonymous, while adding a field
-## like Alt-Rep.  Anyway, we should check for semi-colons escaped in parameters.
+## We should check for semi-colons escaped in parameters.
 def checkEscapedSemiColon(phrase):
     """
         checkEscapedSemiColon is another parsing function, similar to checkEscapedColon, except
@@ -240,7 +237,7 @@ def checkEscapedSemiColon(phrase):
     return paramList
 
 ## Note: There is no checkEscapedComma, in part because our model assumed Parameters only have one value,
-## and because of considerations for fields like alt-rep.
+## and because of considerations for fields like alt-rep.  
 
 ## checks the next string for folding, otherwise returns a list of indexs already
 ## associated with the new concanated string.

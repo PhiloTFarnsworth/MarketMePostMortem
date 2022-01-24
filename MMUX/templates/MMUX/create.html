@@ -1,0 +1,16 @@
+{% extends "MMUX/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <div class="container">
+        <h2>{{formTitle}}</h2>
+    {% autoescape off %}
+    <form action='{{formAddress}}' method='POST'>
+    {% endautoescape %}
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type='submit' value='Create'>
+    </form>
+    </div>
+{% endblock %}

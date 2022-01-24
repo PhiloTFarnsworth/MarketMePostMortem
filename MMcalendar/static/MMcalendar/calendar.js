@@ -1,0 +1,1 @@
+//For calendar rendering, we just want to clean up our passed in rendering

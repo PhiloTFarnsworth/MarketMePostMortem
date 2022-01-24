@@ -1,0 +1,16 @@
+{% extends "MMUX/layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h2>My Services</h2>
+    <!--
+        TODO: Figure out if we're using the same page on the user profile to allow people to book.
+        On one hand, we could just add some conditionals for permissions and relationships, but I 
+        feel that a user's profile may benefit from a one-page experience.  In which case, this detail
+        view would be inappropriate.
+    -->
+    {% for service in services %}
+        <p> {{service.summary}} - {{service.description}} - {{service.duration}} <strong>${{service.price}}</strong></p>
+    {% endfor %}
+</div>
+{% endblock %}

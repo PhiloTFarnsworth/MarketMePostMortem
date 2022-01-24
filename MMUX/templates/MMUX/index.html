@@ -1,0 +1,153 @@
+{% extends "MMUX/layout.html" %}
+{% load calendar_extras %}
+{% load tz %}
+{% load crispy_forms_tags %}
+<!--
+    Index will have a split function, if you are a user that is not logged in, get a spiel about
+    the general capabilities of the service, otherwise, if user is logged in they should just get 
+    a dashboard of their services at a glance.  Calendar should display either all their events
+    of the day, otherwise their next scheduled event (or no events scheduled).  Social should
+    display whether a user has an active campaign they are running, otherwise a prompt to design
+    a campaign.  Finally media should have their featured video (if they have one for their profile),
+    plus any playlists they have in their media area. 
+-->
+{% block body %}
+{% if user.is_authenticated %}
+<div class="container">
+    <h1>{{user.username}}'s dashboard</h1>
+    <div class="row">
+        <h2>Upcoming Events</h2>
+        <!--
+            Calendars:  For each calendar owned by user, we'll list the soonest upcoming event.
+            I have no idea why someone needs multiple calendars on this platform but since we have
+            the ability to import/export multiple calendars at the same time, why not.
+        -->
+        <div class="col">
+        {% for calendar, eventlist in events.items %}
+            <div class="dashboardDetailRow">
+                <div class="dashboardBubble">
+                    <h3><a href='{% url "single calendar" user.username calendar 0 0%}'>{{calendar}}</a></h3>
+                    {% if eventlist|length > 0 %}
+                        <p>{{ eventlist.0.dtstart }}: {{ eventlist.0.summary }} with {{ eventlist.0.mainCalendar.name }}</p>
+                        {% for attendee in eventlist.o.attendee.all %}
+                            {{attendee}}
+                        {% endfor %}
+                    {% else %}
+                        <p>No upcoming Events.</p>
+                    {% endif %}
+                    <p><a href='{% url "export calendar" calendar user.username %}'>Download this calendar as an .ics file</a></p>
+                </div>
+                <div class="dashboardLongBubble">
+                    {% if availability|lookup:calendar|length == 0 %}
+                        <p>You should add some <a href='{% url "create availability" calendar %}'>Availability rules</a> for this calendar</p>
+                    {% else %}
+                        <h2>Availability Rules for {{calendar}}</h2>
+                        {% for rule in availability|lookup:calendar %}
+                            <div class="dashboardBubble">
+                                <h3>{{rule.name}}</h3>
+                                <p>{{rule.begin}}-{{rule.end}}</p>
+                                <p>{{rule.scope|dayAbbr}}</p>
+                                <p><a href="{% url 'delete availability' calendar rule.name %}">Delete?</a></p>
+                            </div>
+                        {% endfor %}
+                        <p>You can add more availability rules <a href='{% url "create availability" calendar %}'>here</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+            <h2>Relationship Manager</h2>
+            <div id='RelationshipIntro' class='dashboardList'>
+                <h3>Introductions</h3>
+                {% for relation in relations %}
+                    {% if relation.level == 1 and relation.vendor == request.user and relation.revoked == False %}
+                        <p>{{relation.client.username}} {{relation.client.email}} </p>
+                        <a href='{% url "relation upgrade" relation.client.username %}'>Upgrade</a>
+                        <a href='{% url "relation revoke" relation.client.username %}'>Revoke</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id='RelationshipVerified' class='dashboardList'>
+                <h3>Relationships</h3>
+                {% for relation in relations %}
+                    {% if relation.level > 1 and relation.vendor == request.user and relation.revoked == False %}
+                        <p><a href='{% url "profile" relation.client.username %}'> {{relation.client.username}} </a> {{relation.client.email}}</p>
+                        <a href='{% url "relation revoke" relation.client.username %}'>Revoke</a>
+                    {% endif %}
+                {% endfor %}
+            </div> 
+            <div id='RelationshipFollowing' class="dashboardList">
+                <h3>Followed Vendors</h3>
+                {% for relation in relations %}
+                    {% if relation.client == request.user and relation.revoked == False %}
+                        {{relation.vendor.username}} {{relation.vendor.email}}
+                    {% endif %}
+                {% endfor %}
+            </div>   
+        </div>
+    <!--Service Manager-->
+    {% if user.serviceTool == True %}
+    <div class="col">
+        <!--List of offered services at a glance?-->
+        <h2>Services</h2>
+        {% if services|length > 0 %}
+            {% for service in services %}
+                <div class="dashboardBubble">
+                    <h3>{{service.summary}}</h3>
+                    <p>{{service.description}}</p> 
+                    <p>{{service.categories}}</p>
+                    <p>${{service.price}} - {{service.duration|duration}}</p>
+                </div>
+            {% endfor %}
+            <a href="{% url 'create service' %}">Add a new Service?</a>
+
+        {% else %}
+            <p>You aren't offering any services, would you like to <a href="{% url 'create service' %}">add one?</a></p>
+        {% endif %}
+    </div>
+    {% endif %}
+    <div class="col">
+        <h2>Pending Events</h2>
+        <p>The following events are pending confirmation</p>
+        {% for calendar , eventlist in pendingEvents.items %}
+            <div class="dashboardDetailRow">
+                <h3>For {{calendar}}</h3>
+                    {% for event in eventlist %}
+                        <div class='dashboardBubble'>
+                        {{event.summary}} with {{event.mainCalendar.name}} @ {{event.dtstart}} attending:
+                            {% for name in event.attendee.all %}
+                                {{name.name}}
+                            {% endfor %} 
+                        {% if event.mainCalendar in calendars %}
+                            <a href='{% url "confirm event" event.uid %}'> Confirm Event Here </a>
+                        {% else %}
+                            Awaiting Confirmation
+                        {% endif %}
+                        </div>
+                    {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+    <div class="container">
+        <h1>MarketME</h1>
+        <div class="row">
+        <div class="col">
+        <p class="lead">It's Your Time.</p>
+        <p> 
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti ratione, rem assumenda voluptas sint earum ut, necessitatibus asperiores, eaque modi doloremque atque rerum dolorem explicabo aliquam facere sapiente excepturi fugiat.
+        </p>
+        </div>
+        <div class="col">
+            <h2>Create an account!</h2>
+            <form action='{% url "register" %}' method='POST' class='uniForm'>
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type='submit' value="Register">
+            </form>
+        </div>
+        </div>
+    </div>
+{% endif%}
+</div>
+{% endblock %}

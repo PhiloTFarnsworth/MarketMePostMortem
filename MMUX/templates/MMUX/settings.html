@@ -1,0 +1,14 @@
+{% extends "MMUX/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <div class="container">
+        <h2>Settings</h2>
+    <form action='{% url "settings" %}' method='POST'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type='submit' value='Change Settings'>
+    </form>
+    </div>
+{% endblock %}

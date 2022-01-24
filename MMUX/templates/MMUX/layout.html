@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+    <title>MarketME</title>
+    <!--Bootstrap stuff here-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous">
+    
+
+    <!--End Bootstrap-->
+    <link href="{% static 'MMUX/styles.css'%}" rel="stylesheet">
+    <!-- 
+        Custom script goes in here. I expect a general function js file as well as
+        specialized scripts for certain apps.
+    -->
+    {% block script %}
+    {% endblock %}
+</head>
+<body>
+    <!-- include "TODO: Status Message"-->
+    <nav class='navbar navbar-expand-md navbar-light' style='background-color: orangered;'>
+        
+        <div class="container-fluid">
+        <a class='navbar-brand' href='{% url "index" %}'>MarketME</a>
+        <ul class='navbar-nav me-auto'>
+        {% if user.is_authenticated %}
+        <!--
+            So the big question becomes whether we want to segregate vendor/client experiences.
+            Not every client will necessarily need all the tools.  Everyone needs a Calendar,
+            but do they need they media/services/social?  I think to keep our top bar from
+            becoming too busy, users should use the settings to enable those services in
+            navigation (A stretch goal would be to have them see a tutorial for use when
+            they turn the service on.)
+        -->
+
+                {% if user.serviceTool == True %}
+                <li class='nav-item'>
+                    <a class='nav-link' href="{% url 'my services' %}">My Services</a>
+                </li>
+                {% endif %}
+                <li class='nav-item'>
+                    <a class='nav-link' href="{% url 'settings' %}">My Settings</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href="{% url 'profile' user.username %}">My Profile</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href="{% url 'logout' %}">Log Out</a>
+                </li>
+        {% else %}
+                <li class='nav-item'>
+                    <a class='nav-link' href="{% url 'login' %}">Log-In</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href="{% url 'register' %}">Register</a>
+                </li>
+        {% endif %}  
+            </ul>
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>

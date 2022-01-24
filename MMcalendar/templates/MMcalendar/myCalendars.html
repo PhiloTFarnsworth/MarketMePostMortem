@@ -1,0 +1,8 @@
+{% extends "MMUX/layout.html" %}
+
+{% block body %}
+    <h2>{{thisUser.username}}'s Calendars</h2>
+    {% for calendar in calendars %}
+        <p>{{calendar.name}}</p>
+    {% endfor %}
+{% endblock %}

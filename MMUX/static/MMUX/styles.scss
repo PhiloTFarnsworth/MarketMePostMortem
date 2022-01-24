@@ -1,0 +1,64 @@
+
+// form {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+
+.splitScreen {
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    width: 80vw;
+    margin: auto;
+    .serviceArea{
+        width: 20vw;
+    }
+    .dayPlanner{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+        width: 60vw;
+        .hour{
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            h3 {
+                margin: auto;
+                width: 2vw;
+            }
+            button{
+                flex-grow: 1;
+            }
+            .minuteContainer{
+                display: flex;
+                flex-direction: column;
+                width: 50vw;
+                .minute{
+                    display: flex;
+                    flex-direction: row;
+                    .minuteStatus{
+                        flex-grow: 1;
+                        background-color: green;
+                        button{
+                            margin: auto;
+                        }
+                    }
+                    h4{
+                        width: 5vw;
+                    }
+                    p{
+                        width: 5vw;
+                    }
+                    .minuteStatus:hover{
+                        border: red dotted;
+                    }
+                }
+            }
+        }
+    }
+}

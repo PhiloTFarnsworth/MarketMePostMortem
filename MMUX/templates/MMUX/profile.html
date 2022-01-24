@@ -1,0 +1,47 @@
+<!--
+    This view should be dedicated to the user, so we don't want to extend our layout.  Instead, we are best served
+    throwing our information discretely down at the bottom instead of continuing with our layout's header.  In my mind,
+    we should strive to present the vendor's information in a concise manner, and try to minimize the amount of scrolling
+    the visiting user has to do to understand what the vendor does and how they can schedule with them.       
+-->
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <!--All that yummy css and js here-->
+</head>
+{% load markdownify %}
+<body>
+    <!--
+        Page has three components, at the top will be headline bio information, picture, ect., below that we have the navigation
+        buttons, which allow the browsing user to modify what is displayed in the dynamic third area of a user's profile.  For the 
+        time being, they'll be able to go between a written profile of the person, the services offered and finally the monthly calendar
+        view for the profile.
+    -->
+    <div class="profileTopper">
+        {{thisUser.first_name}} {{thisUser.last_name}}
+        {% if user == thisUser %}
+            <a href='{%url "profile settings"%}'>Edit your profile!</a>
+        {% endif %}
+        <div class="topperLeft">
+            <img src={{Profile.image}}>
+            <button>
+                Introduce yourself!
+            </button>
+        </div>
+        <div class="topperRight">
+            {% if Profile.location %}
+                {{Profile.location}}
+            {% endif %}
+            <p>Contact me @ {{Profile.publicContact}}</p>
+        </div>
+    </div>
+    <div class="profileNav">
+        <button>Bio</button>
+        <button>Services</button>
+        <button>Calendar</button>
+    </div>
+    <div class="profileMeat">
+        {{Profile.markupContents|markdownify}}
+    </div>
+</body>

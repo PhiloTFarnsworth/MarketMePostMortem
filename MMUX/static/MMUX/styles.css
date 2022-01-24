@@ -1,0 +1,87 @@
+/* form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} */
+
+.calendarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month {
+  width: 70vw;
+  border-collapse: collapse;
+}
+.month tbody {
+  height: 70vh;
+}
+.month tbody tr td {
+  border: dotted;
+  text-align: center;
+  vertical-align: top;
+  padding: 0%;
+  width: 10vw;
+  height: 6.5vw;
+  overflow-y: scroll;
+}
+
+.splitScreen {
+  display: flex;
+  flex-direction: row;
+  height: 80vh;
+  width: 80vw;
+  margin: auto;
+}
+.splitScreen .serviceArea {
+  width: 20vw;
+}
+.splitScreen .dayPlanner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  width: 60vw;
+}
+.splitScreen .dayPlanner .hour {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+.splitScreen .dayPlanner .hour h3 {
+  margin: auto;
+  width: 2vw;
+}
+.splitScreen .dayPlanner .hour button {
+  flex-grow: 1;
+}
+.splitScreen .dayPlanner .hour .minuteContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+}
+.splitScreen .dayPlanner .hour .minuteContainer .minute {
+  display: flex;
+  flex-direction: row;
+}
+.splitScreen .dayPlanner .hour .minuteContainer .minute .minuteStatus {
+  flex-grow: 1;
+  background-color: green;
+}
+.splitScreen .dayPlanner .hour .minuteContainer .minute .minuteStatus button {
+  margin: auto;
+}
+.splitScreen .dayPlanner .hour .minuteContainer .minute h4 {
+  width: 5vw;
+}
+.splitScreen .dayPlanner .hour .minuteContainer .minute p {
+  width: 5vw;
+}
+.splitScreen .dayPlanner .hour .minuteContainer .minute .minuteStatus:hover {
+  border: red dotted;
+}
+
+/*# sourceMappingURL=styles.css.map */

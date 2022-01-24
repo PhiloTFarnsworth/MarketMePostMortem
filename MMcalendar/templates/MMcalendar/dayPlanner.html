@@ -1,0 +1,62 @@
+{% extends "MMUX/layout.html" %}
+{% load calendar_extras %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'MMcalendar/dayplan.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class='Navbar'>
+        {% if date.day == 1 %}
+            {% if date.month == 1%}
+            <a href="{% url 'day details' owner.username calendar.name date.year|add:'-1' 12 31 %}"> Previous Day</a>
+            {% else %}
+                <a href="{% url 'day details' owner.username calendar.name date.year date.month|add:'-1' previousMonth|date:'t' %}"> Previous Day</a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'day details' owner.username calendar.name date.year date.month date.day|add:'-1' %}"> Previous Day</a>
+        {% endif %}
+        <a href="{% url 'single calendar' owner.username calendar.name date.year date.month %}">Month View</a>
+        {% if endofMonth == True %}
+            {% if date.month == 12 %}
+                <a href="{% url 'day details' owner.username calendar.name date.year|add:'1' 1 1 %}"> Next Day</a>
+            {% else%}
+                <a href="{% url 'day details' owner.username calendar.name date.year date.month|add:'1' 1 %}"> Next Day</a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'day details' owner.username calendar.name date.year date.month date.day|add:'1' %}"> Next Day</a>
+        {% endif %}
+    </div>
+    <h2 id='todayDate'>{{date|date:'l F j, Y'}}</h2>
+    <div class="splitScreen">
+        <div class="serviceArea">
+            <form id='bookingForm' action='{% url "book event" owner.username calendar.name date.year date.month date.day %}' method="POST">
+                {% csrf_token %}
+                <label for='services'>Select a service:</label>
+                <select id='bookingFormSelect' name='services'>
+                    {% if owner == user %}
+                        <option value='createEvent'>Create an Event</option>
+                    {% endif %}
+                    {% for service in services %}
+                        <option value='{{service.summary}}'>{{service.summary}}</option>
+                    {% endfor %}
+                </select>
+                <input type='text' name='dtstart' id='bookingFormDtstart' hidden/>
+                <input type='text' name='description' id='bookingFormDescription' hidden/>
+                <input type='text' name="duration" id='bookingFormDuration' hidden/>
+                <input type='text' name="price" id='bookingFormPrice' hidden/>
+            </form>
+            {% for service in services %}
+                <div class='ServiceDetails' id="{{service.summary}}Details">
+                    <h3 hidden>{{service.summary}}</h3>
+                    <p id='{{service.summary}}Duration' hidden>Duration: {{service.duration|duration}}</p>
+                    <p id='{{service.summary}}Description' hidden>{{service.description}}</p>
+                    <strong id='{{service.summary}}Price' hidden>{{service.price}}</strong>
+                </div>
+            {% endfor %}
+            <div class='errorMessage' id="errorMessage"></div>
+        </div>
+        {{planner|safe}}
+    </div>
+{% endblock %}
